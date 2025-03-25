@@ -10,3 +10,9 @@ Feature: On this page we will verify functionalities related to address book
     Given I navigate to the Address Book Entries page
     When I verify that the Address Book Entries page opens successfully
     Then I create a new address and confirm its successful creation
+
+
+    Scenario: Delete all address present
+    Given I navigate to the Address Book Entries page
+    When I verify that the Address Book Entries page opens successfully
+    Then i delete all addresses present

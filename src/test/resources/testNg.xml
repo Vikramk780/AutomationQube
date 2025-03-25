@@ -7,4 +7,10 @@
             <class name="runner.TestRunner"/>
         </classes>
     </test>
+
+<!--    <test name="Cucumber Tests for rerun">-->
+<!--        <classes>-->
+<!--            <class name="runner.TestRunnerForFailedCases"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

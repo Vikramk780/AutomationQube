@@ -5,15 +5,15 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
-@CucumberOptions(features="src/test/resources/features",
+@CucumberOptions(features="@target/rerun.txt",
 glue={"stepDefinitions"},
-        plugin = {"pretty","html:target/cucumber-reports","io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm","rerun:target/rerun.txt"},
+        plugin = {"pretty","html:target/RerunedCucumber-reports","rerun:target/rerun.txt"},
         monochrome = true,
         publish = true
 
 
 )
-public class TestRunner extends AbstractTestNGCucumberTests {
+public class TestRunnerForFailedCases extends AbstractTestNGCucumberTests {
 
     @Override
     @DataProvider(parallel = true)

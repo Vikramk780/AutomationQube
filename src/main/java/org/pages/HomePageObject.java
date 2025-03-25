@@ -12,7 +12,7 @@ public class HomePageObject {
     private By desktopbtn = By.xpath("//a[@class='list-group-item' and contains(text(), 'Address Book')]");
     private By editaccountsLink = By.xpath("//a[contains(text(), 'Edit Account')]");
     private By addressbookpagebtn = By.xpath("//a[text()='Address Book']");
-    private By newsletterbtn =By.xpath("(//a[contains(text(),'Newsletter')])[2]");
+    private By newsletterbtn =By.xpath("//a[@class='list-group-item' and text()='Newsletter']");
 
     public HomePageObject(WebDriver driver) {
         this.driver = driver;

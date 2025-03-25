@@ -2,12 +2,17 @@ package org.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import util.FluentWaitHelper;
+import util.FluentWaitHelperForMultiElement;
+
+import java.util.List;
 
 public class AddressBookEntriesPage {
     WebDriver driver;
     FluentWaitHelper fluentWaitHelper;
+    FluentWaitHelperForMultiElement fluentWaitHelperForMultiElement;
 
     private By firstNameField = By.xpath("//input[@name='firstname']");
     private By lastNameField = By.xpath("//input[@name='lastname']");
@@ -22,10 +27,12 @@ public class AddressBookEntriesPage {
 
     private By submitbtn = By.xpath("//input[@type='submit']");
     private By createNewAddressbtn = By.xpath("//a[text()='New Address']");
+    private By addDeletebtn = By.xpath("//a[text()='Delete']");
 
     public AddressBookEntriesPage(WebDriver driver) {
         this.driver = driver;
         fluentWaitHelper = new FluentWaitHelper(driver);
+        fluentWaitHelperForMultiElement =new FluentWaitHelperForMultiElement(driver);
     }
 
     public void clickOnAddressBookPage() {
@@ -56,6 +63,12 @@ public class AddressBookEntriesPage {
 
 
         fluentWaitHelper.waitForThisElement(submitbtn).click();
+    }
+
+    public List<WebElement> getDeleteBtnCount(){
+
+      return fluentWaitHelperForMultiElement.waitForThisElement(addDeletebtn);
+
     }
 
 }

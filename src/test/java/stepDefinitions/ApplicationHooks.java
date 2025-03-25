@@ -10,6 +10,7 @@ import util.ConfigReader;
 import java.io.IOException;
 import java.util.Properties;
 
+
 public class ApplicationHooks {
 
     ConfigReader config;
@@ -39,6 +40,23 @@ public class ApplicationHooks {
 
         DriverFactory.getDriver().quit();
     }
+
+    @After(order = 1)
+    public void generateAllureReport() {
+        try {
+            ProcessBuilder builder = new ProcessBuilder(
+                    "cmd", "/c", "allure.bat", "generate", "target/allure-results", "-o", "target/site/allure-report", "--clean"
+            );
+            Process process = builder.start();
+            process.waitFor(); // Wait for the process to complete
+            System.out.println("✅ Allure report generated successfully!");
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     public static Properties getProperties() {
         return prop;
     }

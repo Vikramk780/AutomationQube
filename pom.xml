@@ -14,6 +14,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
+<!--    this properties for allure report-->
+    <aspectj.version>1.9.23</aspectj.version>
+
+
   </properties>
 
   <dependencies>
@@ -65,9 +69,29 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-devtools-v118</artifactId>
-      <version>4.14.0</version>
+      <version>4.16.1</version>
     </dependency>
 
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-cucumber7-jvm</artifactId>
+      <version>2.25.0</version>
+    </dependency>
+
+    <!-- Allure TestNG Integration -->
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>2.25.0</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.9.23</version>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -78,21 +102,56 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <release>11</release>
+          <release>21</release>
         </configuration>
       </plugin>
 
       <!-- Updated Surefire Plugin for Running Tests -->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-surefire-plugin</artifactId>-->
+<!--        <version>3.0.0</version>-->
+<!--        <configuration>-->
+<!--            <suiteXmlFiles>-->
+<!--            <suiteXmlFile>src/test/resources/testNg.xml</suiteXmlFile>-->
+<!--          </suiteXmlFiles>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+
+
+<!--inside this plugin specific directory is mentioned in order to save allure report,also generally allure reports works via cmd using two commands but when we run rinner then report 'site' was not getting generated inside allure-sites so got sollution to install allure in local set path and add code in application hooks so it started working via test runner without explicity mentioning mvn allure:report-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.3.0</version>
         <configuration>
-            <suiteXmlFiles>
+          <suiteXmlFiles>
             <suiteXmlFile>src/test/resources/testNg.xml</suiteXmlFile>
           </suiteXmlFiles>
+          <argLine>
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+          </argLine>
+          <systemPropertyVariables>
+            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
+
+
+      <!-- this is for allure report to integrate allure with maven-->
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.11.2</version>
+      </plugin>
+
+<!--      This plugin is to generate aluure report automatically without running explicite command-->
+
+
+
+
+
+
 
     </plugins>
   </build>
